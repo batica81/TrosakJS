@@ -1,24 +1,64 @@
 {
   "name": "trosakjs",
-  "version": "1.0.0",
   "description": "Aplikacija za pracenje dnevnih troskova",
-  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Vojislav Ristivojevic",
+    "email": "batica@gmail.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "engines": {
+    "node": "^18.0.0",
+    "npm": ">= 3.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "npm run lint && npm run mocha",
+    "lint": "eslint src/. test/. --config .eslintrc.json --fix",
+    "dev": "nodemon src/",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive --exit"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/batica81/TrosakJS.git"
+  "standard": {
+    "env": [
+      "mocha"
+    ],
+    "ignore": []
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/batica81/TrosakJS/issues"
-  },
-  "homepage": "https://github.com/batica81/TrosakJS#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "mysql": "^2.18.1"
+    "@feathersjs/authentication": "^4.5.15",
+    "@feathersjs/authentication-local": "^4.5.15",
+    "@feathersjs/authentication-oauth": "^4.5.15",
+    "@feathersjs/configuration": "^4.5.15",
+    "@feathersjs/errors": "^4.5.15",
+    "@feathersjs/express": "^4.5.15",
+    "@feathersjs/feathers": "^4.5.15",
+    "@feathersjs/socketio": "^4.5.15",
+    "@feathersjs/transport-commons": "^4.5.15",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "feathers-sequelize": "^6.4.0",
+    "helmet": "^5.1.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.27.0",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "axios": "^1.2.1",
+    "eslint": "^8.29.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.20"
   }
 }
