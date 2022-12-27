@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "trosakuser",
+    "password": "qwerty123",
+    "database": "trosak01",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "trosakuser",
+    "password": "qwerty123",
+    "database": "trosak01",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "trosakuser",
+    "password": "qwerty123",
+    "database": "trosak01",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

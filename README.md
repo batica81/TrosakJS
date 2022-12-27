@@ -1,45 +1,22 @@
-# trosakjs
+# TrosakJS
+Aplikacija za pracenje dnevnih troskova
 
-> Aplikacija za pracenje dnevnih troskova
+todo:
 
-## About
+dockerize
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+git actions deployment
 
-## Getting Started
+full api phase 1
 
-Getting up and running is as easy as 1, 2, 3.
+fe phase 2
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
+take fe from trosak01 for fe
 
-    ```
-    cd path/to/trosakjs
-    npm install
-    ```
+react (or just material ui) phase 3
+-----------------
 
-3. Start your app
+services needed:
 
-    ```
-    npm start
-    ```
 
-## Testing
 
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Scaffolding
-
-Feathers has a powerful command line interface. Here are a few things it can do:
-
-```
-$ npm install -g @feathersjs/cli          # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers help                           # Show all commands
-```
-
-## Help
-
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
