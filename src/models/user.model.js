@@ -5,24 +5,8 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
-  trosak = sequelizeClient.define('trosak', {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   primaryKey: true
-    // },
-    datum: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    iznos: {
-      type: DataTypes.INTEGER
-    },
-    komentar: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    kategorija: {
+  const user = sequelizeClient.define('user', {
+    text: {
       type: DataTypes.STRING,
       allowNull: false
     }
@@ -35,10 +19,10 @@ module.exports = function (app) {
   });
 
   // eslint-disable-next-line no-unused-vars
-  trosak.associate = function (models) {
+  user.associate = function (models) {
     // Define associations here
     // See https://sequelize.org/master/manual/assocs.html
   };
 
-  return trosak;
+  return user;
 };

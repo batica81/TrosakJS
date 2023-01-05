@@ -4,12 +4,32 @@ const Sequelize = require('sequelize');
 const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
-  const sequelizeClient = app.get('sequelizeClient');
-  const raspored = sequelizeClient.define('raspored', {
-    text: {
-      type: DataTypes.STRING,
+  const sequelizeClient = app.get('sequelizeClient');const
+    raspored = sequelizeClient.define('raspored', {
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   primaryKey: true
+    // },
+    dateCreated: {
+      type: DataTypes.DATE,
       allowNull: false
-    }
+    },
+    visible: {
+      type: DataTypes.INTEGER
+    },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      start: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      end: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
   }, {
     hooks: {
       beforeCount(options) {

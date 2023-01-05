@@ -2,7 +2,7 @@
 
 module.exports = {
   before: {
-    all: [],
+    all: [testHook],
     find: [],
     get: [],
     create: [],
@@ -31,3 +31,10 @@ module.exports = {
     remove: []
   }
 };
+
+function testHook(context) {
+
+  console.log('hook')
+  return context;
+
+}
