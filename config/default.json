@@ -8,8 +8,8 @@
   },
   "authentication": {
     "entity": "user",
-    "service": "users",
-    "secret": "cILEvUwA2X9q/uO7k8STK4nSJwc=",
+    "service": "user",
+    "secret": "UsUhHhRTIpN/L/kSR4B71dpnh0w=",
     "authStrategies": [
       "jwt",
       "local"
@@ -26,18 +26,6 @@
     "local": {
       "usernameField": "email",
       "passwordField": "password"
-    },
-    "oauth": {
-      "redirect": "/",
-      "google": {
-        "key": "<google oauth key>",
-        "secret": "<google oauth secret>",
-        "scope": [
-          "email",
-          "profile",
-          "openid"
-        ]
-      }
     }
   },
   "mysql": "mysql://trosakuser:qwerty123@localhost:3306/trosak01"
