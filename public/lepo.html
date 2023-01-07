@@ -1,54 +1,54 @@
-<?php
-require 'connectvars.php';
+<!--<?php-->
+<!--require 'connectvars.php';-->
 
-if ( !$_COOKIE["loginCookie"] =="logedinnow-". hash('sha512', (PHP_AUTH_PW.APP_SECRET)) ) {
-    header('location:login.php');
-} 
+<!--if ( !$_COOKIE["loginCookie"] =="logedinnow-". hash('sha512', (PHP_AUTH_PW.APP_SECRET)) ) {-->
+<!--    header('location:login.php');-->
+<!--} -->
 
-use Medoo\Medoo;
-require 'vendor/autoload.php';
+<!--use Medoo\Medoo;-->
+<!--require 'vendor/autoload.php';-->
 
-$database = new Medoo([
-    'database_type' => 'mysql',
-    'database_name' => DB_NAME,
-    'server' => DB_HOST,
-    'username' => DB_USER,
-    'password' => DB_PASSWORD,
-    'charset' => 'utf8'
-]);
+<!--$database = new Medoo([-->
+<!--    'database_type' => 'mysql',-->
+<!--    'database_name' => DB_NAME,-->
+<!--    'server' => DB_HOST,-->
+<!--    'username' => DB_USER,-->
+<!--    'password' => DB_PASSWORD,-->
+<!--    'charset' => 'utf8'-->
+<!--]);-->
 
-$now = new DateTime('now');
-$month = $now->format('n');
-$year = (int) $_GET['year'];
-$godisnjitrosak = 0;
-$allMonths = [];
+<!--$now = new DateTime('now');-->
+<!--$month = $now->format('n');-->
+<!--$year = (int) $_GET['year'];-->
+<!--$godisnjitrosak = 0;-->
+<!--$allMonths = [];-->
 
-$allMonths = $database->query("SELECT sum(iznos) as iznos, month(datum) as mesec FROM trosak WHERE  year(datum) = ".$year." group by month(datum) order by month(datum);")->fetchAll();
+<!--$allMonths = $database->query("SELECT sum(iznos) as iznos, month(datum) as mesec FROM trosak WHERE  year(datum) = ".$year." group by month(datum) order by month(datum);")->fetchAll();-->
 
-for ($i=0; $i < sizeof($allMonths); $i++) {
-    $godisnjitrosak += $allMonths[$i]['iznos'];
-}
+<!--for ($i=0; $i < sizeof($allMonths); $i++) {-->
+<!--    $godisnjitrosak += $allMonths[$i]['iznos'];-->
+<!--}-->
 
-$monthlyDetail = $database->query("SELECT sum(iznos) as iznos, komentar, month(datum) as mesec from trosak where year(datum) = ".$year." group by komentar, mesec order by mesec;
-")->fetchAll();
+<!--$monthlyDetail = $database->query("SELECT sum(iznos) as iznos, komentar, month(datum) as mesec from trosak where year(datum) = ".$year." group by komentar, mesec order by mesec;-->
+<!--")->fetchAll();-->
 
-?>
+<!--?>-->
 
 <head>
 	<title>Analitika</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-    <link rel="stylesheet" type="text/css" href="public/css/main.css">
-	<script type="text/javascript" src="public/js/js-lib.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+	<script type="text/javascript" src="js/js-lib.js"></script>
 </head>
 <body>
 
-<a class="fakeLink btn" href="index.php">< Nazad</a>
+<a class="fakeLink btn" href="index.html">< Nazad</a>
 <div class="container-fluid d-flex justify-content-center">
     <div class="-col-sm-8  col-md-10  col-lg-6 ">
         <div class="links center">
-            <a class="fakeLink btn"  href="lepo.php?year=<?php echo $year-1;?>">< Prethodna</a>
-            <a class="fakeLink btn"  href="lepo.php?year=<?php echo $year+1;?>">Sledeća ></a>
+            <a class="fakeLink btn"  href="lepo.html?year=<?php echo $year-1;?>">< Prethodna</a>
+            <a class="fakeLink btn"  href="lepo.html?year=<?php echo $year+1;?>">Sledeća ></a>
         </div>
         <div class="center"><h4>Trosak za <span class="bold"><?php echo $year;?>.</span> godinu</h4></div>
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -56,7 +56,7 @@ $monthlyDetail = $database->query("SELECT sum(iznos) as iznos, komentar, month(d
 </div>
 
 <?php
-    echo '<script type="text/javascript"> 
+    echo '<script type="text/javascript">
         let allMonths = '.json_encode($allMonths).';
         let monthlyDetail = '.json_encode($monthlyDetail).';
         let year = '.$year.';

@@ -4,7 +4,7 @@ module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
     all: [  ],
-    find: [],
+    find: [testHook],
     get: [],
     create: [],
     update: [],
@@ -33,6 +33,18 @@ module.exports = {
   }
 };
 
-function testHook() {
+function testHook(context) {
   // return 'aaa'
+  console.log(context.params.query)
+  if (context.params.query.monthly && context.params.query.monthly === "true") {
+
+    let trosakModel = context.app.get('trosak');
+    //let contentsModel = context.app.get('contentsModel');
+    let data = context.data;
+
+    console.log(trosakModel)
+    console.log(data)
+    return context
+  }
+  else return context;
 }
