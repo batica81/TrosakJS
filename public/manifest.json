@@ -1,0 +1,24 @@
+{
+  "name": "Trosak manager",
+  "short_name": "Trosak",
+  "description": "Aplikacija za pracenje mesecnih troskova.",
+  "background_color": "#2196f3",
+  "theme_color": "#2196f3",
+  "display": "standalone",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "start_url": ".",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "img/favicon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "img/favicon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

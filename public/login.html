@@ -1,0 +1,21 @@
+<?php
+require 'connectvars.php';
+
+if ( $_COOKIE && ($_COOKIE["loginCookie"] =="logedinnow-". hash('sha512', (PHP_AUTH_PW.APP_SECRET))) ) {
+    header('location:index.php');
+
+} else if (isset($_POST) && (!empty($_POST['password'])) ) {
+
+        // TODO: Change to db pw double hashing
+        if ($_POST['password'] == hash( 'sha256', PHP_AUTH_PW)) {
+            setcookie("loginCookie", "logedinnow-" . hash('sha512', (PHP_AUTH_PW . APP_SECRET)), time() + (3600 * 24 * 7 * 4), "", APP_DOMAIN, false,
+                TRUE);
+            header('location:index.php');
+        } else {
+            require 'form.php';
+            echo "<script>launch_toast();</script>";
+        }
+
+} else {
+    require 'form.php';
+}

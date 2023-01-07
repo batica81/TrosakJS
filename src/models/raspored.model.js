@@ -6,15 +6,6 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');const
     raspored = sequelizeClient.define('raspored', {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   primaryKey: true
-    // },
-    dateCreated: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
     visible: {
       type: DataTypes.INTEGER
     },

@@ -6,15 +6,6 @@ const DataTypes = Sequelize.DataTypes;
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
   const prihod = sequelizeClient.define('prihod', {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    datum: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
     prihod_iznos: {
       type: DataTypes.INTEGER,
       allowNull: false

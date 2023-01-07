@@ -1,0 +1,173 @@
+body {
+  background-color: #adadad;
+  //padding-top: 50px;
+
+  .fc {
+    font-size: 2em;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  body {
+
+    .fc {
+      font-size: 1em;
+    }
+  }
+}
+
+
+.container {
+  padding-top: 50px;
+}
+
+//CALENDAR
+
+#calendar {
+  margin-bottom: 20px;
+}
+
+.fc-view {
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .fc-daygrid-day {
+    background-color: white;
+  }
+
+  .fc-daygrid-event {
+    background-color: #3a87ad;
+  }
+
+  .fc-event-title {
+    color: white;
+    font-weight: initial;
+    font-size: 20px;
+  }
+
+  .fc-event-time {
+    font-size: 20px;
+    color: white;
+    padding-right: 5px;
+  }
+
+  .fc-col-header-cell {
+    background-color: #e9e9e9;
+  }
+
+  .fc-col-header-cell.fc-day-sat {
+    background-color:  #e9e9e9;
+  }
+
+  .fc-col-header-cell.fc-day-sun {
+    background-color:  #e9e9e9;
+  }
+
+  tr {
+    font-weight: bold;
+  }
+  .fc-daygrid-day.fc-day-sat {
+    background-color: lightgray;
+    a {
+      color: #5bc0de;
+    }
+  }
+
+  .fc-daygrid-day.fc-day-sun {
+    background-color: lightgray;
+    a {
+      color: #ff0000;
+    }
+  }
+
+  .fc-content {
+    font-size: initial;
+  }
+
+}
+
+.fc-day-today {
+  background: #fffa90 !important;
+  color: #777620 !important;
+}
+
+
+////////////////////
+
+.lastTen {
+  //margin: 0 20px 0 20px;
+  padding-top: 0;
+
+  h4 {
+    //text-align: center;
+  }
+
+  table, th, td {
+    border: 1px solid black;
+  }
+
+  td {
+    padding: 4px;
+  }
+
+}
+
+.headerWrapper {
+  justify-content: space-evenly;
+}
+
+.trosakInput {
+  background-color: lightgray;
+  display: table;
+  padding: 15px;
+  margin: 35px;
+  border-radius: 0.25rem;
+}
+
+.fakeLink {
+  background-color: #17a2b8;
+  color: white;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  //text-transform: uppercase;
+  display: inline-block;
+  margin: 1rem;
+  min-width: 150px;
+
+  &:hover {
+    background-color: #138496;
+    color: #d8e8ff;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: black;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.trosakButton{
+  margin: 10px 0;
+}
+
+.prihodButton{
+  margin: 10px 0;
+}
+
+#timepicker {
+  margin: 25px;
+}

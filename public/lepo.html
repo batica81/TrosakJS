@@ -1,0 +1,278 @@
+<?php
+require 'connectvars.php';
+
+if ( !$_COOKIE["loginCookie"] =="logedinnow-". hash('sha512', (PHP_AUTH_PW.APP_SECRET)) ) {
+    header('location:login.php');
+} 
+
+use Medoo\Medoo;
+require 'vendor/autoload.php';
+
+$database = new Medoo([
+    'database_type' => 'mysql',
+    'database_name' => DB_NAME,
+    'server' => DB_HOST,
+    'username' => DB_USER,
+    'password' => DB_PASSWORD,
+    'charset' => 'utf8'
+]);
+
+$now = new DateTime('now');
+$month = $now->format('n');
+$year = (int) $_GET['year'];
+$godisnjitrosak = 0;
+$allMonths = [];
+
+$allMonths = $database->query("SELECT sum(iznos) as iznos, month(datum) as mesec FROM trosak WHERE  year(datum) = ".$year." group by month(datum) order by month(datum);")->fetchAll();
+
+for ($i=0; $i < sizeof($allMonths); $i++) {
+    $godisnjitrosak += $allMonths[$i]['iznos'];
+}
+
+$monthlyDetail = $database->query("SELECT sum(iznos) as iznos, komentar, month(datum) as mesec from trosak where year(datum) = ".$year." group by komentar, mesec order by mesec;
+")->fetchAll();
+
+?>
+
+<head>
+	<title>Analitika</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="public/css/main.css">
+	<script type="text/javascript" src="public/js/js-lib.js"></script>
+</head>
+<body>
+
+<a class="fakeLink btn" href="index.php">< Nazad</a>
+<div class="container-fluid d-flex justify-content-center">
+    <div class="-col-sm-8  col-md-10  col-lg-6 ">
+        <div class="links center">
+            <a class="fakeLink btn"  href="lepo.php?year=<?php echo $year-1;?>">< Prethodna</a>
+            <a class="fakeLink btn"  href="lepo.php?year=<?php echo $year+1;?>">Sledeća ></a>
+        </div>
+        <div class="center"><h4>Trosak za <span class="bold"><?php echo $year;?>.</span> godinu</h4></div>
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+</div>
+
+<?php
+    echo '<script type="text/javascript"> 
+        let allMonths = '.json_encode($allMonths).';
+        let monthlyDetail = '.json_encode($monthlyDetail).';
+        let year = '.$year.';
+        let godisnjitrosak = '.$godisnjitrosak.';
+    </script>';
+?>
+
+<script type="text/javascript">
+
+    monthlyDetail.forEach(md => md['iznos'] = parseInt(md['iznos']));
+    monthlyDetail = _.sortBy(monthlyDetail, 'iznos');
+
+    let allMonthsSorted =[];
+    for (let i = 0; i < 12; i++) {
+        allMonthsSorted.push(0);
+    }
+
+    for (let j = 0; j < allMonths.length; j++) {
+        allMonthsSorted[allMonths[j].mesec-1] = allMonths[j].iznos;
+    }
+
+    function getMonthlySpending(clickedMonth, chart) {
+        removeData(chart);
+        for (let i = 0; i < monthlyDetail.length; i++) {
+            if (parseInt(monthlyDetail[i]['mesec']) === clickedMonth) {
+                addData(chart, monthlyDetail[i]['komentar'], monthlyDetail[i]['iznos']);
+            }
+        }
+    }
+
+    function addData(chart, label, data) {
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
+
+    function removeData(chart) {
+        chart.data.labels.length = 0;
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.length = 0;
+        });
+        chart.update();
+    }
+
+    window.addEventListener("load", function () {
+
+        let ctx = document.getElementById('myChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Januar", "Februar", "Mart", "April", "Maj", "Jun", "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"],
+                datasets: [{
+                    label: 'Trošak: ',
+                    // data: [12, 19, 3, 5, 2, 10, 12, 5],
+                    data: allMonthsSorted,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Trošak za ' + year + '. godinu: '+ godisnjitrosak.toLocaleString('sr') + ' din.',
+                    fontSize: 18
+                },
+                onClick: function (e, i) {
+                    console.log(e)
+                    console.log(i)
+                    if (i[0] !== null && i[0] !== undefined) {
+                        getMonthlySpending(i[0].index + 1, myChart2);
+                        $('#myModal2').modal('show');
+                        $('.clickedMonth')[0].innerHTML = i[0].index + 1;
+                    }
+                }
+            }
+        });
+
+        let ctx2 =  document.getElementById('myChart2').getContext('2d');
+        let myChart2 = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Trošak: ',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Trošak za '+year+'. godinu: '+godisnjitrosak.toLocaleString('sr')
+                }
+            }
+        });
+
+});
+
+</script>
+
+    <div id="myModal2" class="modal fade " tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Troškovi za <span class="clickedMonth"></span>. mesec <?php echo $year;?>. godine.</h4>
+                    <button type="button" class="close" onclick="$('#myModal2').modal('hide');" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="myChart2" width="800" height="800"></canvas>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="$('#myModal2').modal('hide');">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

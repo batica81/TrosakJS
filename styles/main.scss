@@ -1,0 +1,15 @@
+//import dist stylesheets below
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/font-awesome/scss/font-awesome";
+@import "node_modules/fullcalendar-scheduler/main";
+@import "node_modules/jquery-ui-dist/jquery-ui";
+@import "node_modules/jquery-ui-dist/jquery-ui.theme";
+@import "node_modules/jquery-ui-timepicker-addon/dist/jquery-ui-timepicker-addon";
+@import "node_modules/sweetalert2/dist/sweetalert2";
+
+//import your stylesheets below
+
+@import "login";
+@import "toast";
+@import "style";
