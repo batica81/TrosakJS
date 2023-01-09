@@ -1,4 +1,5 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
+const  user  = require("../../models/user.model");
 
 module.exports = {
   before: {
@@ -33,18 +34,23 @@ module.exports = {
   }
 };
 
-function testHook(context) {
-  // return 'aaa'
-  console.log(context.params.query)
+async function testHook(context) {
+
   if (context.params.query.monthly && context.params.query.monthly === "true") {
 
-    let trosakModel = context.app.get('trosak');
-    //let contentsModel = context.app.get('contentsModel');
-    let data = context.data;
+    // let trosak = await context.app.service('trosak');
 
-    console.log(trosakModel)
-    console.log(data)
-    return context
+    const users = await user.findAll();
+
+
+
+
+
+
+    console.log(users)
+    context.result = users
+    return context;
+
   }
   else return context;
 }

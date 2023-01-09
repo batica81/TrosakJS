@@ -10,13 +10,13 @@ const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 
-
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 const channels = require('./channels');
 
 const sequelize = require('./sequelize');
+const authentication = require('./authentication');
 
 const app = express(feathers());
 
@@ -52,5 +52,7 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
+
+app.configure(authentication);
 
 module.exports = app;
