@@ -1,35 +1,21 @@
 /* eslint-disable no-unused-vars */
 
-const User = require("../../models/user.model");
-
 exports.Intervalexpense = class Intervalexpense {
   constructor (options) {
     this.options = options || {};
   }
 
+
   async find (params) {
-
-
-    // console.log(user)
-    const users = await User.findAll();
-
-
-
-    // Trosak.findAll({
-    //   attributes: [
-    //     'foo',
-    //     [sequelize.fn('COUNT', sequelize.col('hats')), 'n_hats'],
-    //     'bar'
-    //   ]
-    // });
-
-    return users;
-
+    return [];
   }
+
+
 
   async get (id, params) {
     return {
-      id, text: `A new message with ID: ${id}!`
+      id,
+      text: `A new message with ID: ${id}!`
     };
   }
 

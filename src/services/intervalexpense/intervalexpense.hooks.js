@@ -1,5 +1,3 @@
-
-
 module.exports = {
   before: {
     all: [],
@@ -13,7 +11,7 @@ module.exports = {
 
   after: {
     all: [],
-    find: [],
+    find: [testHook],
     get: [],
     create: [],
     update: [],
@@ -31,3 +29,15 @@ module.exports = {
     remove: []
   }
 };
+
+// todo: refactor to use a service, not a hook
+async function testHook(context) {
+    const sequelize = context.app.get('sequelizeClient');
+
+    context.result = await sequelize.query(
+      'SELECT * FROM user',
+      {type: sequelize.QueryTypes.SELECT}
+    )
+
+    return context
+}
