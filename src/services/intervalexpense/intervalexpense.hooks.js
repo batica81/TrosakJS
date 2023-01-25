@@ -34,8 +34,21 @@ module.exports = {
 async function testHook(context) {
     const sequelize = context.app.get('sequelizeClient');
 
-    context.result = await sequelize.query(
-      'SELECT * FROM user',
+
+  // <!--$now = new DateTime('now');-->
+  // <!--$month = $now->format('n');-->
+  // <!--$year = (int) $_GET['year'];-->
+  // <!--$godisnjitrosak = 0;-->
+  // <!--$allMonths = [];-->
+
+
+
+  let year = parseInt(context.params.query.year);
+
+
+
+  context.result = await sequelize.query(
+      'SELECT sum(iznos) as iznos, month(createdAt) as mesec FROM trosak WHERE  year(createdAt) = ' + year + ' group by month(createdAt) order by month(createdAt)',
       {type: sequelize.QueryTypes.SELECT}
     )
 
