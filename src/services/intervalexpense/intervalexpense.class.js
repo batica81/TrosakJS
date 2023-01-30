@@ -13,9 +13,37 @@ exports.Intervalexpense = class Intervalexpense {
 
 
   async get (id, params) {
+
+    const app = require('../../app');
+
+
+      const sequelize = app.get('sequelizeClient');
+
+
+      // <!--$now = new DateTime('now');-->
+      // <!--$month = $now->format('n');-->
+      // <!--$year = (int) $_GET['year'];-->
+      // <!--$godisnjitrosak = 0;-->
+      // <!--$allMonths = [];-->
+
+
+
+      let year = parseInt(params.query.year);
+
+
+
+      let  result = await sequelize.query(
+        'SELECT sum(iznos) as iznos, month(createdAt) as mesec FROM trosak WHERE  year(createdAt) = ' + year + ' group by month(createdAt) order by month(createdAt)',
+        {type: sequelize.QueryTypes.SELECT}
+      )
+
+
+
+
     return {
       id,
-      text: `A new message with ID: ${id}!`
+      text: `A new message with ID: ${id}!`,
+      res: result
     };
   }
 
