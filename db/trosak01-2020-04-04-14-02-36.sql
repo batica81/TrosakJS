@@ -1049,7 +1049,7 @@ CREATE TABLE `trosak` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3196 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `trosak` (`id`, `datum`, `iznos`, `komentar`) VALUES
+INSERT INTO `trosak` (`id`, createdAt, `iznos`, `komentar`) VALUES
 (5,	'2017-01-12 17:14:46',	320,	'rucak'),
 (12,	'2017-01-11 17:39:59',	950,	'razno'),
 (13,	'2017-01-10 17:47:12',	700,	'razno'),

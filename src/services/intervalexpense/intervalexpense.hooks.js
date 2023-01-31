@@ -42,15 +42,26 @@ async function testHook(context) {
   // <!--$allMonths = [];-->
 
 
+  if (context.params.query.interval === 'allMonths') {
+    let year = parseInt(context.params.query.year);
 
-  let year = parseInt(context.params.query.year);
-
-
-
-  context.result = await sequelize.query(
+    context.result = await sequelize.query(
       'SELECT sum(iznos) as iznos, month(createdAt) as mesec FROM trosak WHERE  year(createdAt) = ' + year + ' group by month(createdAt) order by month(createdAt)',
       {type: sequelize.QueryTypes.SELECT}
     )
+  }
+
+  else if (context.params.query.interval === 'currentMonth') {
+
+    // sql for current month total
+
+    context.result = await sequelize.query(
+      'SELECT sum(iznos) as iznos, month(createdAt) as mesec FROM trosak WHERE  year(createdAt) = ' + year + ' group by month(createdAt) order by month(createdAt)',
+      {type: sequelize.QueryTypes.SELECT}
+    )
+  }
+
+
 
     return context
 }
